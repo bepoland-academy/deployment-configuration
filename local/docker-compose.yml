@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  configuration-service:
+    container_name: configuration-service
+    image: pl.betse.beontime/configuration-service:latest
+    restart: always
+    ports:
+    - "8888:8888"
+
+  registry-service:
+    container_name: registry-service
+    image: pl.betse.beontime/registry-service:latest
+    environment:
+    - CONFIG_SERVER_URL=http://configuration-service:8888
+    restart: always
+    ports:
+    - "8761:8761"
+    links:
+    - configuration-service:configuration-service
+
+  gateway-service:
+    container_name: gateway-service
+    image: pl.betse.beontime/gateway-service:latest
+    environment:
+    - CONFIG_SERVER_URL=http://configuration-service:8888
+    - REGISTRY_URL=http://registry-service:8761/eureka/
+    restart: always
+    ports:
+    - "8080:8080"
+    links:
+    - configuration-service:configuration-service
+    - registry-service:registry-service
+
+  users-service:
+    container_name: users-service
+    image: pl.betse.beontime/users-service:latest
+    environment:
+    - CONFIG_SERVER_URL=http://configuration-service:8888
+    - REGISTRY_URL=http://registry-service:8761/eureka/
+    restart: always
+    links:
+    - configuration-service:configuration-service
+    - registry-service:registry-service
