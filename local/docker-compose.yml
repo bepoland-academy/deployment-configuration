@@ -8,7 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_USER: test_user
       MYSQL_PASSWORD: qaz123
-      MYSQL_DATABASE: TEST_DATABASE
+      MYSQL_DATABASE: USERS_DB
     restart: always
     ports:
       - "3306:3306"
@@ -50,9 +50,9 @@ services:
     environment:
       - CONFIG_SERVER_URL=http://configuration-service:8888
       - REGISTRY_URL=http://registry-service:8761/eureka/
-      - DATABASE_URL=jdbc:mysql://database:3306/TEST_DATABASE
-      - DB_USERNAME=test_user
-      - DB_PASSWORD=qaz123
+      - DATABASE_URL=jdbc:mysql://database:3306/USERS_DB?createDatabaseIfNotExist=true&serverTimezone=UTC
+      - DB_USERNAME=root
+      - DB_PASSWORD=secret
     restart: always
     links:
       - configuration-service:configuration-service
