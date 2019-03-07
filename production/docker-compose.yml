@@ -11,7 +11,7 @@ services:
       MYSQL_DATABASE: USERS_DB
     restart: always
     ports:
-      - "3306:3306"
+    - "3306:3306"
 
   configuration-service:
     container_name: configuration-service
@@ -63,9 +63,16 @@ services:
     container_name: authentication-service
     image: build-server:5000/pl.betse.beontime/authentication-service:latest
     environment:
-      - CONFIG_SERVER_URL=http://configuration-service:8888
-      - REGISTRY_URL=http://registry-service:8761/eureka/
+    - CONFIG_SERVER_URL=http://configuration-service:8888
+    - REGISTRY_URL=http://registry-service:8761/eureka/
     restart: always
     links:
-      - configuration-service:configuration-service
-      - registry-service:registry-service
+    - configuration-service:configuration-service
+    - registry-service:registry-service
+
+  frontend:
+    container_name: frontend
+    image: build-server:5000/pl.betse.beontime/frontend:latest
+    ports:
+    - "80:80"
+    restart: always
