@@ -58,3 +58,14 @@ services:
       - configuration-service:configuration-service
       - registry-service:registry-service
       - database:database
+
+  authentication-service:
+    container_name: authentication-service
+    image: pl.betse.beontime/authentication-service:latest
+    environment:
+      - CONFIG_SERVER_URL=http://configuration-service:8888
+      - REGISTRY_URL=http://registry-service:8761/eureka/
+    restart: always
+    links:
+      - configuration-service:configuration-service
+      - registry-service:registry-service

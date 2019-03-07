@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+  database:
+    container_name: database
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: qaz123
+      MYSQL_DATABASE: USERS_DB
+    restart: always
+    ports:
+      - "3306:3306"
+
   configuration-service:
     container_name: configuration-service
     image: build-server:5000/pl.betse.beontime/configuration-service:latest
@@ -38,7 +50,22 @@ services:
     environment:
     - CONFIG_SERVER_URL=http://configuration-service:8888
     - REGISTRY_URL=http://registry-service:8761/eureka/
+    - DATABASE_URL=jdbc:mysql://database:3306/USERS_DB?createDatabaseIfNotExist=true&serverTimezone=UTC
+    - DB_USERNAME=root
+    - DB_PASSWORD=secret
     restart: always
     links:
     - configuration-service:configuration-service
     - registry-service:registry-service
+    - database:database
+
+  authentication-service:
+    container_name: authentication-service
+    image: build-server:5000/pl.betse.beontime/authentication-service:latest
+    environment:
+      - CONFIG_SERVER_URL=http://configuration-service:8888
+      - REGISTRY_URL=http://registry-service:8761/eureka/
+    restart: always
+    links:
+      - configuration-service:configuration-service
+      - registry-service:registry-service
