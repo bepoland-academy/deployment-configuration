@@ -70,7 +70,7 @@ services:
       - configuration-service:configuration-service
       - registry-service:registry-service
 
-  projectss-service:
+  projects-service:
     container_name: projects-service
     image: pl.betse.beontime/projects-service:latest
     environment:
