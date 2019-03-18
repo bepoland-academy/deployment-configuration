@@ -91,7 +91,7 @@ services:
     environment:
       - CONFIG_SERVER_URL=http://configuration-service:8888
       - REGISTRY_URL=http://registry-service:8761/eureka/
-      - DATABASE_URL=jdbc:mysql://database:3306/PROJECTS_DB?createDatabaseIfNotExist=true&serverTimezone=UTC
+      - DATABASE_URL=jdbc:mysql://database:3306/TIMESHEET_DB?createDatabaseIfNotExist=true&serverTimezone=UTC
       - DB_USERNAME=root
       - DB_PASSWORD=secret
     restart: always
