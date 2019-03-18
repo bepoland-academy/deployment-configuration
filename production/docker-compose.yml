@@ -85,6 +85,21 @@ services:
       - registry-service:registry-service
       - database:database
 
+  timesheet-service:
+    container_name: timesheet-service
+    image: build-server:5000/pl.betse.beontime/timesheet-service:latest
+    environment:
+      - CONFIG_SERVER_URL=http://configuration-service:8888
+      - REGISTRY_URL=http://registry-service:8761/eureka/
+      - DATABASE_URL=jdbc:mysql://database:3306/TIMESHEET_DB?createDatabaseIfNotExist=true&serverTimezone=UTC
+      - DB_USERNAME=root
+      - DB_PASSWORD=secret
+    restart: always
+    links:
+      - configuration-service:configuration-service
+      - registry-service:registry-service
+      - database:database
+
   frontend:
     container_name: frontend
     image: build-server:5000/pl.betse.beontime/frontend:latest
