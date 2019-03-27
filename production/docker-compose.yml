@@ -30,6 +30,9 @@ services:
     - "8761:8761"
     links:
     - configuration-service:configuration-service
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
 
   gateway-service:
     container_name: gateway-service
