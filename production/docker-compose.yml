@@ -12,6 +12,9 @@ services:
     restart: always
     ports:
     - "3306:3306"
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
 
   configuration-service:
     container_name: configuration-service
@@ -46,6 +49,9 @@ services:
     links:
     - configuration-service:configuration-service
     - registry-service:registry-service
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
 
   users-service:
     container_name: users-service
@@ -61,6 +67,9 @@ services:
     - configuration-service:configuration-service
     - registry-service:registry-service
     - database:database
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
 
   authentication-service:
     container_name: authentication-service
@@ -72,6 +81,9 @@ services:
     links:
     - configuration-service:configuration-service
     - registry-service:registry-service
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
 
   projects-service:
     container_name: projects-service
@@ -87,6 +99,9 @@ services:
       - configuration-service:configuration-service
       - registry-service:registry-service
       - database:database
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
 
   timesheet-service:
     container_name: timesheet-service
@@ -102,6 +117,9 @@ services:
       - configuration-service:configuration-service
       - registry-service:registry-service
       - database:database
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
 
 
   frontend:
@@ -110,3 +128,6 @@ services:
     ports:
     - "80:80"
     restart: always
+    volumes:
+    - /etc/timezone:/etc/timezone:ro
+    - /etc/localtime:/etc/localtime:ro
