@@ -100,6 +100,7 @@ services:
       - registry-service:registry-service
       - database:database
 
+
   frontend:
     container_name: frontend
     image: build-server:5000/pl.betse.beontime/frontend:latest
