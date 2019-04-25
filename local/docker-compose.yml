@@ -84,6 +84,8 @@ services:
       - configuration-service:configuration-service
       - registry-service:registry-service
       - database:database
+    ports:
+      - "4444:4444"
 
   timesheet-service:
     container_name: timesheet-service
