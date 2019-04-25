@@ -93,7 +93,7 @@ services:
     environment:
       - CONFIG_SERVER_URL=http://configuration-service:8888
       - REGISTRY_URL=http://registry-service:8761/eureka/
-      - DATABASE_URL=jdbc:mysql://database:3306/TIMESHEET_DB?createDatabaseIfNotExist=true&serverTimezone=CET
+      - DATABASE_URL=jdbc:mysql://database:3306/TIMESHEET_DB?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       - DB_USERNAME=root
       - DB_PASSWORD=secret
     restart: always
@@ -101,3 +101,5 @@ services:
       - configuration-service:configuration-service
       - registry-service:registry-service
       - database:database
+    ports:
+      - "5555:5555"
